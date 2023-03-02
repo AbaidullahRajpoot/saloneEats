@@ -7,29 +7,31 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.saloneeats.userapp
+        bundle_identifier: io.codemagic.flutteryaml
       vars:
-        APP_ID: 6445951083
+        APP_ID: 6445951083 # <-- Put your APP ID here
       flutter: stable
+      xcode: latest
+      cocoapods: default
     scripts:
       - name: Set up code signing settings on Xcode project
-        script: | 
+        script: |
           xcode-project use-profiles
       - name: Get Flutter packages
-        script: | 
+        script: |
           flutter packages pub get
       - name: Install pods
-        script: | 
+        script: |
           find . -name "Podfile" -execdir pod install \;
       - name: Flutter analyze
-        script: | 
+        script: |
           flutter analyze
       - name: Flutter unit tests
-        script: | 
+        script: |
           flutter test
         ignore_failure: true
-      - name: Flutter build ipa
-        script: | 
+      - name: Flutter build ipa and automatic versioning
+        script: |
           flutter build ipa --release \
             --build-name=1.0.0 \
             --build-number=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1)) \
@@ -39,16 +41,24 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
+      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
           - abaidullah.gwl@gmail.com
           - mr.abaidullahrajpoot@gmail.com
         notify:
-          success: true
-          failure: false
+          success: true # To receive a notification when a build succeeds
+          failure: false # To not receive a notification when a build fails
+      slack:
+        # See the following link about how to connect your Slack account - https://docs.codemagic.io/publishing-yaml/distribution/#slack
+        channel: "#builds"
+        notify_on_build_start: true # To receive a notification when a build starts
+        notify:
+          success: true # To receive a notification when a build succeeds
+          failure: false # To not receive a notification when a build fails
       app_store_connect:
         auth: integration
-
+        
         # Configuration related to TestFlight (optional)
         # Note: This action is performed during post-processing.
         submit_to_testflight: true
