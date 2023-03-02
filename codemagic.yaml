@@ -7,11 +7,9 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.saloneeats.userapp
+        bundle_identifier: Saloneeats - com.saloneeats.userapp
       vars:
-        # APP_ID: 1555555551
         APP_ID: 6445951083
-        
       flutter: stable
     scripts:
       - name: Set up code signing settings on Xcode project
