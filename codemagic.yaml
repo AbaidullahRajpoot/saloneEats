@@ -6,8 +6,8 @@ workflows:
       app_store_connect: codemagic
     environment:
       ios_signing:
-        distribution_type: app_store
-        bundle_identifier: io.codemagic.flutteryaml
+        distribution_type: development
+        bundle_identifier: com.saloneeats.userapp
       vars:
         APP_ID: 6445951083 # <-- Put your APP ID here
       flutter: stable
