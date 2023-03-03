@@ -7,9 +7,9 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.saloneeats.userapp
+        bundle_identifier: io.codemagic.flutteryaml
       vars:
-        APP_ID: 6445951083 # <-- Put your APP ID here
+        APP_ID: Bammybeats@gmail.com # <-- Put your APP ID here
       flutter: stable
       xcode: latest
       cocoapods: default
@@ -44,8 +44,8 @@ workflows:
       # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
       email:
         recipients:
-          - user_1@example.com
-          - user_2@example.com
+          - abaidullah.gwl@gmail.com
+         
         notify:
           success: true # To receive a notification when a build succeeds
           failure: false # To not receive a notification when a build fails
